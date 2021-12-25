@@ -1,0 +1,21 @@
+Чтобы открыть в "основном" браузере, надо приписать пару-тройку сторк:
+
+1. Импортим options
+
+from selenium.webdriver.chrome.options import Options
+
+2. Создаем переменную с путем до драйвера
+
+PATH = 'path/to/chromedriver.exe'
+
+3. Создаем экземпляр(инстанс)
+
+chrome_options = Options()
+
+3. Добавляем аргумент, где нам нужно указать путь до нашего chrome
+
+chrome_options.add_argument('--user-data-dir=C:\\Users\\<username>\\Appdata\\Local\\Goggle\\Chrome\\User Data')
+
+4. И создать драйвер с параметрами
+
+driver = webdriver.Chrome(chrome_options=chrome_options, executable_path=PATH)

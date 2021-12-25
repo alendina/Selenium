@@ -1,0 +1,49 @@
+Жду на Stepik курс по автоматизации тестирования через REST API (pytest) с использованием Docker и GitLab (для CI).
+Начиная с тест-дизайна и заканчивая настройкой инфраструктуры с генерацией отчетов
+
+---
+
+извлечение информации с сайта с последующим сохранением ее в отдельный
+текстовый документ - это парсинг, скрапинг, мне кажется, лучше и проще
+воспользоваться библиотеками requests и beautiful soup, без плясок с селениумом.
+
+-------------------
+
+Ситуация: тяжеловесный сайт через впн очень долго грузится, иногда бесконечно долго,
+соответственно код не выполняется, пока не остановишь загрузку. Но жать вручную на крестик -
+это отбирать хлеб у роботов. Гуглил, нашел решение в настройках pageLoadStrategy
+(по умолчанию 'normal', также принимает 'eager' или 'none'). Пример кода:
+
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
+
+link = "example.com"
+caps = DesiredCapabilities.CHROME
+browser = webdriver.Chrome(desired_capabilities=caps)
+caps["pageLoadStrategy"] = "none"
+browser.get(link)
+# ждем загрузку элемента:
+WebDriverWait(browser, 5).until(EC.presence_of_element_located((By.CSS_SELECTOR, ".example_selector")))
+# стопаем загрузку сайта:
+browser.execute_script("window.stop();")
+Для автотестов может и не самая полезная фича, а вот для парсинга - самое то)
+
+--------------
+
+иногда наблюдаешь выполнение таких скриптов и становится удобной,
+с небольшим замедлением, цветовая подсветка контролируемых элементов,
+покрасить их в красный, либо зеленый цвет, а проверяемые элементы просто
+желтым, подсветил, убрал подсветку и пошел далее по тесту.
+
+
+
+div_to_change = browser.find_element_by_id("price")
+
+browser.execute_script("arguments[0].setAttribute('style', 'background-color: rgb(222, 0, 0);')", div_to_change)
+
+# div_to_change.setAttribute('background', 'rgb(111, 0, 0)')  # этот не всегда и не ко всем элементам
+
+ 1
