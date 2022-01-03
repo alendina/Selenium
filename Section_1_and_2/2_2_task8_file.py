@@ -20,7 +20,7 @@ try:
 
     #current_dir = os.path.abspath(os.path.dirname(__file__))
     current_dir = os.getcwd()
-    file_name = "XPath.txt"
+    file_name = "Info_XPath.txt"
     print(current_dir)
     print(file_name)
     file_path = os.path.join(current_dir, file_name)
